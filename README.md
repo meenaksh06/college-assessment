@@ -6,59 +6,47 @@ User authentication for students and professors.
 Professors can set and manage their availability.
 Students can view available slots and book appointments.
 Professors can cancel appointments, and students can check their bookings.
-Technologies Used
+
+Technologies Used:
 Node.js: Runtime environment.
 Express: Framework for building REST APIs.
 Prisma: ORM for database interactions.
 MySQL: Relational database for data storage.
 Jest & Supertest: Frameworks for automated end-to-end testing.
 
-Installation and Setup
+Installation and Setup:
 1. Prerequisites
 Make sure the following are installed:
-Node.js (v16 or later)
+Node.js
 MySQL
-npm (Node Package Manager)
+npm 
 
-2. Clone the Repository
-bash
-Copy code
+2. Clone the Repository:
 git clone https://github.com/your-username/college-appointment-system.git
 cd college-appointment-system
 
-3. Install Dependencies
-bash
-Copy code
+3. Install Dependencies:
 npm install
 
-4. Set Up Environment Variables
-Create a .env file in the project root directory:
-bash
-Copy code
+4. Set Up Environment Variables:
+Create a .env file in the project root directory
 touch .env
+
 Add the following environment variables:
-env
-Copy code
 DATABASE_URL="mysql://username:password@localhost:3306/college_appointment_system"
 JWT_SECRET="your-secret-key"
 PORT=3000
 
-5. Configure Database
+5. Configure Database:
 Run the following commands to initialize the database:
-bash
-Copy code
 npx prisma generate
 npx prisma migrate dev
 
-6. Start the Server
-bash
-Copy code
+6. Start the Server:
 npm start
 The application will be available at http://localhost:3000.
 
-Folder Structure
-bash
-Copy code
+Folder Structure:
 college-appointment-system/
 ├── prisma/
 │   ├── schema.prisma        # Prisma schema
@@ -69,15 +57,14 @@ college-appointment-system/
 │   ├── server.js            # Entry point for the application
 ├── .env                     # Environment variables
 ├── package.json             # Project dependencies and scripts
+
 Testing
 To run automated tests:
-
-bash
-Copy code
 npm test
 Troubleshooting
 Prisma Initialization Errors: Ensure the database is running and the DATABASE_URL in the .env file is correct.
 Server Errors: Check the console logs for detailed error messages.
+
 Contributing
 Contributions are welcome! To contribute:
 
