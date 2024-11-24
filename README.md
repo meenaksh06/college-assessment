@@ -1,157 +1,91 @@
-# Project Name: Backend API Testing
+College Appointment System:
+The College Appointment System is a backend application that facilitates appointment bookings between students and professors. Professors can specify their availability, manage appointments, and students can view and book time slots.
 
-This repository contains the backend API for managing user authentication, availability settings for professors, and appointment bookings. The testing suite is built using **Jest** and **Supertest** for API testing, with a Prisma-based database.
+Features:
+User authentication for students and professors.
+Professors can set and manage their availability.
+Students can view available slots and book appointments.
+Professors can cancel appointments, and students can check their bookings.
+Technologies Used
+Node.js: Runtime environment.
+Express: Framework for building REST APIs.
+Prisma: ORM for database interactions.
+MySQL: Relational database for data storage.
+Jest & Supertest: Frameworks for automated end-to-end testing.
 
-## Table of Contents
-- [Description](#description)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Running Tests](#running-tests)
-- [Test Structure](#test-structure)
-- [Contributing](#contributing)
-- [License](#license)
+Installation and Setup
+1. Prerequisites
+Make sure the following are installed:
+Node.js (v16 or later)
+MySQL
+npm (Node Package Manager)
 
-## Description
+2. Clone the Repository
+bash
+Copy code
+git clone https://github.com/your-username/college-appointment-system.git
+cd college-appointment-system
 
-This project implements routes for **user authentication**, **professor availability management**, and **appointment booking**. The testing suite ensures that these routes function correctly. The routes include:
+3. Install Dependencies
+bash
+Copy code
+npm install
 
-- **Auth Routes**: Register and login users.
-- **Availability Routes**: Professors can set their availability.
-- **Appointment Routes**: Users can book and manage appointments with professors.
+4. Set Up Environment Variables
+Create a .env file in the project root directory:
+bash
+Copy code
+touch .env
+Add the following environment variables:
+env
+Copy code
+DATABASE_URL="mysql://username:password@localhost:3306/college_appointment_system"
+JWT_SECRET="your-secret-key"
+PORT=3000
 
-## Prerequisites
+5. Configure Database
+Run the following commands to initialize the database:
+bash
+Copy code
+npx prisma generate
+npx prisma migrate dev
 
-Ensure that the following tools are installed on your machine before setting up the project:
+6. Start the Server
+bash
+Copy code
+npm start
+The application will be available at http://localhost:3000.
 
-- [Node.js](https://nodejs.org/) (version 14 or higher)
-- [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
-- [Prisma](https://www.prisma.io/) for database ORM
-- [Supertest](https://github.com/visionmedia/supertest) for API testing
-- [Jest](https://jestjs.io/) for testing framework
+Folder Structure
+bash
+Copy code
+college-appointment-system/
+├── prisma/
+│   ├── schema.prisma        # Prisma schema
+├── src/
+│   ├── controllers/         # API logic
+│   ├── middlewares/         # Authentication and validation logic
+│   ├── routes/              # Route definitions
+│   ├── server.js            # Entry point for the application
+├── .env                     # Environment variables
+├── package.json             # Project dependencies and scripts
+Testing
+To run automated tests:
 
-## Installation
-
-1. **Clone the repository:**
-
-    ```bash
-    git clone https://github.com/yourusername/your-repo-name.git
-    cd your-repo-name
-    ```
-
-2. **Install dependencies:**
-
-    If you're using npm:
-
-    ```bash
-    npm install
-    ```
-
-    Or with Yarn:
-
-    ```bash
-    yarn install
-    ```
-
-3. **Set up the database:**
-
-    If you haven't already set up Prisma with your database, follow the instructions in the [Prisma docs](https://www.prisma.io/docs/getting-started).
-
-    Then, run the Prisma migrations to create the necessary tables:
-
-    ```bash
-    npx prisma migrate dev
-    ```
-
-## Running Tests
-
-To run the tests, use the following command:
-
-```bash
+bash
+Copy code
 npm test
-```
+Troubleshooting
+Prisma Initialization Errors: Ensure the database is running and the DATABASE_URL in the .env file is correct.
+Server Errors: Check the console logs for detailed error messages.
+Contributing
+Contributions are welcome! To contribute:
 
-This will trigger Jest to run the tests and use Supertest to simulate HTTP requests to your backend.
+Fork the repository.
+Create a new branch for your feature or bug fix.
+Commit your changes and submit a pull request.
 
-### Test Coverage
-The test suite covers the following routes:
+License
+This project is licensed under the MIT License.
 
-- **Auth Routes**:
-    - Register a new user
-    - Login an existing user
-
-- **Availability Routes**:
-    - Set professor availability
-    - Retrieve professor availability
-
-- **Appointment Routes**:
-    - Book an appointment
-    - Retrieve appointments for a user
-    - Cancel an appointment
-
-## Test Structure
-
-The tests are located in the `__tests__` directory.
-
-### Example Test for Auth Routes
-
-```javascript
-it('should register a new user', async () => {
-  const response = await request(app)
-    .post('/auth/register')
-    .send({
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      password: 'password123',
-      role: 'STUDENT',
-    });
-
-  expect(response.status).toBe(201);
-  expect(response.body.message).toBe('User registered successfully');
-});
-```
-
-### Example Test for Availability Routes
-
-```javascript
-it('should set availability for professor', async () => {
-  const response = await request(app)
-    .post('/availability/set')
-    .set('Authorization', `Bearer ${token}`)
-    .send({
-      startTime: '2024-11-25T09:00:00Z',
-      endTime: '2024-11-25T12:00:00Z',
-    });
-
-  expect(response.status).toBe(201);
-  expect(response.body.message).toBe('Availability set successfully');
-});
-```
-
-### Example Test for Appointment Routes
-
-```javascript
-it('should book an appointment', async () => {
-  const response = await request(app)
-    .post('/appointments/book')
-    .set('Authorization', `Bearer ${token}`)
-    .send({
-      professorId: 1, // Replace with an actual professor ID
-      startTime: '2024-11-25T09:00:00Z',
-      endTime: '2024-11-25T10:00:00Z',
-    });
-
-  expect(response.status).toBe(201);
-  expect(response.body.message).toBe('Appointment booked successfully');
-});
-```
-
-## Contributing
-
-If you'd like to contribute to this project, feel free to fork the repository and submit pull requests. Ensure that all new code is properly tested and follows the style guidelines used in the project.
-
-1. Fork the repo
-2. Create a new branch (`git checkout -b feature/your-feature`)
-3. Make your changes
-4. Commit your changes (`git commit -am 'Add new feature'`)
-5. Push to the branch (`git push origin feature/your-feature`)
-6. Create a new pull request
+Let me know if you need further adjustments or explanations!
